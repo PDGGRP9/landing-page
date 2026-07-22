@@ -1,0 +1,635 @@
+/* ============================================================
+   Mockup — Dashboard bracelet connecté · Projet PDG GRP9
+   Identité reprise de website/index.html :
+   lime #EBFD72 · encre #141a05 · system-ui · pills 1.5px
+   ============================================================ */
+
+:root {
+  --lime: #EBFD72;
+  --lime-soft: rgba(235, 253, 114, 0.14);
+  --lime-faint: rgba(235, 253, 114, 0.07);
+  --ink: #141a05;
+  --ink-soft: #3a4416;
+
+  /* Thème sombre des écrans de l'app */
+  --bg: #0e1204;
+  --card: #171e07;
+  --card-2: #1d2609;
+  --line: rgba(235, 253, 114, 0.16);
+  --text: #f4ffcf;
+  --muted: #a9b87c;
+  --danger: #ff9c8a;
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  min-height: 100%;
+}
+
+body {
+  background: var(--lime);
+  color: var(--ink);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ---------- Cadre « téléphone » ---------- */
+
+.app {
+  position: relative;
+  max-width: 430px;
+  margin: 0 auto;
+  min-height: 100vh;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  background: var(--lime);
+}
+
+.app--dark {
+  background:
+    radial-gradient(120% 60% at 50% -10%, rgba(235, 253, 114, 0.08), transparent 60%),
+    var(--bg);
+  color: var(--text);
+}
+
+@media (min-width: 560px) {
+  body {
+    background:
+      repeating-linear-gradient(-45deg,
+        rgba(20, 26, 5, 0.045) 0 2px, transparent 2px 14px),
+      var(--lime);
+    padding: 28px 16px;
+  }
+  .app {
+    min-height: 0;
+    height: min(880px, calc(100vh - 56px));
+    border: 2.5px solid var(--ink);
+    border-radius: 40px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    box-shadow: 10px 12px 0 rgba(20, 26, 5, 0.9);
+    scrollbar-width: none;
+  }
+  .app::-webkit-scrollbar { display: none; }
+}
+
+/* ---------- Typo utilitaire ---------- */
+
+.micro {
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.num { font-variant-numeric: tabular-nums; }
+
+/* ---------- En-tête des écrans app ---------- */
+
+.screen {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 1.1rem;
+  padding: 1.25rem 1.15rem 1.25rem;
+}
+
+.appbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.6rem;
+}
+
+.appbar h1 {
+  margin: 0;
+  font-size: 1.5rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  line-height: 1.05;
+}
+
+.appbar .sub {
+  margin: 0.2rem 0 0;
+  font-size: 0.8rem;
+  color: var(--muted);
+}
+
+/* Pastille état bracelet */
+.device {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45em;
+  border: 1.5px solid var(--line);
+  border-radius: 999px;
+  padding: 0.42em 0.85em;
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--text);
+  background: var(--lime-faint);
+  white-space: nowrap;
+}
+.device .led {
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  background: var(--lime);
+  box-shadow: 0 0 8px var(--lime);
+  animation: led-blink 2.4s ease-in-out infinite;
+}
+@keyframes led-blink {
+  0%, 100% { opacity: 1; }
+  50%      { opacity: 0.35; }
+}
+
+/* ---------- Cartes ---------- */
+
+.card {
+  background: var(--card);
+  border: 1.5px solid var(--line);
+  border-radius: 20px;
+  padding: 1rem 1.05rem;
+}
+
+.card .card-title {
+  margin: 0 0 0.15rem;
+  color: var(--muted);
+}
+
+/* ---------- Hero pouls (dashboard) ---------- */
+
+.bpm-hero {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 0.15rem;
+  padding: 0.6rem 0 0.2rem;
+}
+
+.bpm-value {
+  display: flex;
+  align-items: baseline;
+  gap: 0.18em;
+  line-height: 0.9;
+}
+.bpm-value .n {
+  font-size: clamp(4.6rem, 26vw, 6.2rem);
+  font-weight: 800;
+  letter-spacing: -0.045em;
+  color: var(--lime);
+}
+.bpm-value .unit {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--muted);
+}
+
+.bpm-hero .heart {
+  font-size: 1.3rem;
+  display: inline-block;
+  animation: beat 0.97s ease-in-out infinite; /* ~62 bpm */
+}
+@keyframes beat {
+  0%, 100% { transform: scale(1); }
+  14%      { transform: scale(1.3); }
+  28%      { transform: scale(1); }
+  42%      { transform: scale(1.15); }
+  56%      { transform: scale(1); }
+}
+
+.bpm-hero .state {
+  margin-top: 0.4rem;
+  font-size: 0.8rem;
+  color: var(--muted);
+}
+.bpm-hero .state b { color: var(--text); font-weight: 700; }
+
+/* ---------- Graphique « live » ---------- */
+
+.live-chart {
+  height: 96px;
+  overflow: hidden;
+  border-radius: 12px;
+  background:
+    repeating-linear-gradient(to bottom, var(--lime-faint) 0 1px, transparent 1px 24px),
+    var(--card-2);
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+          mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+}
+.live-chart svg {
+  display: block;
+  height: 100%;
+  width: 200%;
+  animation: ppg-scroll 3.2s linear infinite;
+}
+.live-chart path {
+  fill: none;
+  stroke: var(--lime);
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.live-chart .fill {
+  fill: rgba(235, 253, 114, 0.10);
+  stroke: none;
+}
+@keyframes ppg-scroll {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+/* Min / moy / max sous le graphe */
+.stat-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.6rem;
+  margin-top: 0.85rem;
+}
+.stat {
+  text-align: center;
+  border-top: 1.5px solid var(--line);
+  padding-top: 0.55rem;
+}
+.stat .v {
+  font-size: 1.25rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
+.stat .k {
+  color: var(--muted);
+  margin-top: 0.1rem;
+}
+
+/* ---------- Grille métriques secondaires ---------- */
+
+.metrics {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.7rem;
+}
+.metric {
+  position: relative;
+  background: var(--card);
+  border: 1.5px dashed var(--line);
+  border-radius: 18px;
+  padding: 0.85rem 0.9rem;
+  min-height: 92px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.metric .ico { font-size: 1.15rem; }
+.metric .name {
+  font-size: 0.82rem;
+  font-weight: 700;
+  margin-top: 0.35rem;
+}
+.metric .soon {
+  position: absolute;
+  top: 0.7rem; right: 0.7rem;
+  font-size: 0.58rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink);
+  background: var(--lime);
+  border-radius: 999px;
+  padding: 0.28em 0.7em;
+}
+
+/* ---------- Segmented control (historique) ---------- */
+
+.segmented {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  border: 1.5px solid var(--line);
+  border-radius: 999px;
+  padding: 3px;
+  background: var(--card);
+}
+.segmented a {
+  text-align: center;
+  padding: 0.5em 0;
+  border-radius: 999px;
+  font-size: 0.82rem;
+  font-weight: 700;
+  text-decoration: none;
+  color: var(--muted);
+}
+.segmented a.on {
+  background: var(--lime);
+  color: var(--ink);
+}
+
+/* ---------- Graphique historique (barres) ---------- */
+
+.bars svg { display: block; width: 100%; height: auto; }
+.bars .bar { fill: var(--lime); opacity: 0.85; }
+.bars .bar.peak { opacity: 1; }
+.bars .grid { stroke: var(--lime-faint); stroke-width: 1; }
+.bars .axis, .bars .lbl {
+  fill: var(--muted);
+  font-size: 9px;
+  font-family: system-ui, sans-serif;
+}
+.bars .lbl-peak {
+  fill: var(--lime);
+  font-size: 10px;
+  font-weight: 700;
+  font-family: system-ui, sans-serif;
+}
+
+/* ---------- Liste de mesures ---------- */
+
+.rows { display: flex; flex-direction: column; }
+.row {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  padding: 0.7rem 0.2rem;
+  border-top: 1.5px solid var(--line);
+}
+.row:first-child { border-top: none; }
+.row .t { color: var(--muted); font-size: 0.8rem; width: 3.2rem; }
+.row .v { font-weight: 800; font-size: 1rem; width: 4.6rem; }
+.row .v small { font-weight: 600; color: var(--muted); }
+.row .ctx {
+  margin-left: auto;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--muted);
+  border: 1.5px solid var(--line);
+  border-radius: 999px;
+  padding: 0.3em 0.75em;
+}
+
+/* ---------- Compte / RGPD ---------- */
+
+.profile {
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+}
+.avatar {
+  width: 52px; height: 52px;
+  border-radius: 50%;
+  background: var(--lime);
+  color: var(--ink);
+  display: grid;
+  place-items: center;
+  font-weight: 800;
+  font-size: 1.1rem;
+  flex: none;
+}
+.profile .who p { margin: 0; }
+.profile .who .name { font-weight: 800; font-size: 1.05rem; }
+.profile .who .mail { color: var(--muted); font-size: 0.82rem; }
+
+.setting {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.8rem;
+  padding: 0.75rem 0.1rem;
+  border-top: 1.5px solid var(--line);
+}
+.setting:first-child { border-top: none; }
+.setting .label { font-size: 0.9rem; font-weight: 600; }
+.setting .hint {
+  margin: 0.15rem 0 0;
+  font-size: 0.74rem;
+  color: var(--muted);
+  line-height: 1.4;
+}
+
+/* Interrupteur CSS pur */
+.switch { position: relative; display: inline-block; flex: none; }
+.switch input { position: absolute; opacity: 0; inset: 0; }
+.switch .track {
+  display: block;
+  width: 46px; height: 27px;
+  border-radius: 999px;
+  border: 1.5px solid var(--line);
+  background: var(--card-2);
+  transition: background 0.2s ease;
+}
+.switch .track::after {
+  content: "";
+  position: absolute;
+  top: 4px; left: 4px;
+  width: 19px; height: 19px;
+  border-radius: 50%;
+  background: var(--muted);
+  transition: transform 0.2s ease, background 0.2s ease;
+}
+.switch input:checked + .track { background: var(--lime-soft); border-color: var(--lime); }
+.switch input:checked + .track::after { transform: translateX(19px); background: var(--lime); }
+
+/* ---------- Boutons ---------- */
+
+.btn {
+  display: block;
+  width: 100%;
+  text-align: center;
+  text-decoration: none;
+  border-radius: 999px;
+  padding: 0.85em 1em;
+  font-size: 0.92rem;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+  border: 1.5px solid transparent;
+  cursor: pointer;
+  font-family: inherit;
+}
+.btn-solid { background: var(--lime); color: var(--ink); }
+.btn-ghost {
+  background: transparent;
+  color: var(--text);
+  border-color: var(--line);
+}
+.btn-danger {
+  background: transparent;
+  color: var(--danger);
+  border-color: rgba(255, 156, 138, 0.4);
+}
+.btn + .btn { margin-top: 0.6rem; }
+
+/* ---------- Tab bar ---------- */
+
+.tabbar {
+  position: sticky;
+  bottom: 0;
+  z-index: 10;
+  margin: auto -1.15rem -1.25rem; /* pleine largeur malgré le padding de .screen */
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  border-top: 1.5px solid var(--line);
+  background: rgba(14, 18, 4, 0.92);
+  backdrop-filter: blur(8px);
+  padding: 0.55rem 0.4rem calc(0.55rem + env(safe-area-inset-bottom));
+}
+.tabbar a {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.22rem;
+  text-decoration: none;
+  color: var(--muted);
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.tabbar a svg {
+  width: 22px; height: 22px;
+  stroke: currentColor;
+  fill: none;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.tabbar a.on { color: var(--lime); }
+
+/* ---------- Page login (fond lime) ---------- */
+
+.login {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1.3rem 1.4rem 1.1rem;
+}
+
+.login .topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+.login .topbar .tag {
+  border: 1.5px solid var(--ink);
+  border-radius: 999px;
+  padding: 0.3em 0.9em;
+}
+
+.login-hero {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 0.5rem;
+}
+.login-hero h1 {
+  margin: 0.4rem 0 0;
+  font-size: clamp(1.9rem, 9vw, 2.5rem);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  line-height: 1.02;
+}
+.login-hero .tagline {
+  margin: 0;
+  font-size: 0.9rem;
+  font-weight: 700;
+}
+
+/* Ligne ECG (reprise de la landing) */
+.pulse {
+  width: min(320px, 82%);
+  height: 36px;
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent);
+          mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent);
+}
+.pulse svg {
+  display: block;
+  height: 100%;
+  width: 200%;
+  animation: ppg-scroll 2.6s linear infinite;
+}
+.pulse path {
+  fill: none;
+  stroke: var(--ink);
+  stroke-width: 2.4;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.login-form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+}
+.field label {
+  display: block;
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  margin: 0 0 0.3rem 0.2rem;
+}
+.field input {
+  width: 100%;
+  font: inherit;
+  font-weight: 600;
+  color: var(--ink);
+  background: rgba(255, 255, 255, 0.35);
+  border: 1.5px solid var(--ink);
+  border-radius: 14px;
+  padding: 0.8em 1em;
+}
+.field input::placeholder { color: rgba(20, 26, 5, 0.45); }
+.field input:focus {
+  outline: 2.5px solid var(--ink);
+  outline-offset: 1px;
+}
+
+.btn-ink {
+  background: var(--ink);
+  color: var(--lime);
+  margin-top: 0.3rem;
+}
+
+.login-links {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.78rem;
+  font-weight: 600;
+}
+.login-links a { color: var(--ink-soft); }
+
+.login .footer {
+  text-align: center;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  border-top: 1.5px solid rgba(20, 26, 5, 0.25);
+  padding-top: 0.8rem;
+}
+
+/* ---------- Divers ---------- */
+
+.note {
+  font-size: 0.74rem;
+  line-height: 1.5;
+  color: var(--muted);
+  margin: 0;
+}
+.note b { color: var(--text); }
+
+@media (prefers-reduced-motion: reduce) {
+  .pulse svg, .live-chart svg, .heart, .device .led { animation: none; }
+}

@@ -1,0 +1,258 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Découvrir l'app — Montre connectée</title>
+  <style>
+    :root {
+      --bg: #EBFD73;
+      --ink: #141a05;
+      --ink-soft: #3a4416;
+    }
+
+    * { box-sizing: border-box; }
+
+    html, body {
+      height: auto;
+      margin: 0;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--ink);
+      font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .page {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      padding: clamp(1rem, 3.5vh, 2.5rem) clamp(1.5rem, 6vw, 5rem);
+    }
+
+    /* En-tête léger, repris de la landing */
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      font-size: clamp(0.72rem, 1.6vw, 0.85rem);
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: var(--ink-soft);
+    }
+    .topbar .tag {
+      border: 1.5px solid var(--ink);
+      border-radius: 999px;
+      padding: 0.3em 0.9em;
+    }
+    .topbar .back {
+      color: inherit;
+      text-decoration: none;
+    }
+    .topbar .back:hover { color: var(--ink); }
+
+    /* Vitrine : 4 rangées écran + texte, alternées gauche/droite. */
+    .showcase-app {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: clamp(2.5rem, 7vh, 4.5rem);
+      margin-top: clamp(2rem, 6vh, 3.5rem);
+    }
+
+    .feature {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: clamp(1.6rem, 5vw, 4rem);
+      width: 100%;
+      max-width: 880px;
+    }
+    .feature--flip { flex-direction: row-reverse; }
+
+    .feature-text { max-width: 40ch; }
+    .feature-text .kicker {
+      margin: 0 0 0.5rem;
+      font-size: 0.68rem;
+      font-weight: 800;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--ink-soft);
+    }
+    .feature-text h2 {
+      margin: 0;
+      font-size: clamp(1.15rem, 3vw, 1.7rem);
+      font-weight: 800;
+      letter-spacing: -0.01em;
+      line-height: 1.12;
+    }
+    .feature-text p {
+      margin: 0.7rem 0 0;
+      font-size: clamp(0.84rem, 1.9vw, 1rem);
+      line-height: 1.55;
+      color: var(--ink-soft);
+    }
+
+    /* Cadre téléphone — reprend l'identité du cadre de mockup/styles.css
+       (bordure encre 2.5px, radius 40px, ombre dure décalée).
+       L'iframe est rendue à 390px de large : sous le seuil de 560px de la
+       feuille du mockup, l'écran s'affiche donc en mode mobile plein cadre
+       (sans son propre cadre téléphone), et c'est cette page qui dessine le
+       cadre autour. Le scale ramène ces 390px à la largeur du .phone ;
+       transform ne changeant pas la boîte de layout, la hauteur du cadre est
+       fixée à 780px × scale. */
+    .phone {
+      flex: none;
+      width: 320px;
+      height: 640px; /* 780 × 0.821 */
+      border: 2.5px solid var(--ink);
+      border-radius: 40px;
+      overflow: hidden;
+      box-shadow: 10px 12px 0 rgba(20, 26, 5, 0.9);
+      background: var(--ink);
+    }
+    .phone iframe {
+      display: block;
+      width: 390px;
+      height: 780px;
+      border: 0;
+      pointer-events: none; /* vitrine statique : pas de navigation */
+      transform: scale(0.821); /* 320 / 390 */
+      transform-origin: top left;
+    }
+
+    /* CTA final : après la visite, on renvoie vers la commande. */
+    .cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6em;
+      background: var(--ink);
+      color: var(--bg);
+      border: 1.5px solid var(--ink);
+      border-radius: 999px;
+      padding: 0.7em 1.7em;
+      font-size: clamp(0.88rem, 2vw, 1.02rem);
+      font-weight: 700;
+      letter-spacing: 0.02em;
+      text-decoration: none;
+    }
+    .cta .arrow { transition: transform 0.18s ease; }
+    .cta:hover .arrow { transform: translateX(3px); }
+
+    /* Pied de page, repris de la landing */
+    .footer {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 0.4rem 1rem;
+      margin-top: clamp(2rem, 6vh, 3.5rem);
+      font-size: clamp(0.7rem, 1.7vw, 0.88rem);
+      color: var(--ink-soft);
+      border-top: 1.5px solid rgba(20, 26, 5, 0.25);
+      padding-top: clamp(0.6rem, 1.6vh, 1rem);
+    }
+    .footer .team { font-weight: 600; }
+
+    @media (max-width: 700px) {
+      .feature,
+      .feature--flip {
+        flex-direction: column;
+        gap: 1.4rem;
+      }
+      .feature-text { text-align: center; max-width: 48ch; }
+      .phone {
+        width: 264px;
+        height: 528px; /* 780 × 0.677 */
+      }
+      .phone iframe { transform: scale(0.677); } /* 264 / 390 */
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <header class="topbar">
+      <a class="back" href="index.html">← Retour</a>
+      <span class="tag">Projet PDG · GRP9</span>
+    </header>
+
+    <section class="showcase-app">
+      <div class="feature">
+        <div class="phone">
+          <iframe src="mockup/dashboard.html" title="Écran Direct : fréquence cardiaque en temps réel"
+                  loading="lazy" tabindex="-1" scrolling="no"></iframe>
+        </div>
+        <div class="feature-text">
+          <p class="kicker">Direct</p>
+          <h2>Ton cœur, en direct</h2>
+          <p>
+            Ton pouls, seconde par seconde, avec le signal brut sous les yeux.
+            Chez les autres, voir battre ton propre cœur coûte un abonnement.
+            Ici, c'est l'écran d'accueil.
+          </p>
+        </div>
+      </div>
+
+      <div class="feature feature--flip">
+        <div class="phone">
+          <iframe src="mockup/history.html" title="Écran Historique : pouls moyen par heure et mesures récentes"
+                  loading="lazy" tabindex="-1" scrolling="no"></iframe>
+        </div>
+        <div class="feature-text">
+          <p class="kicker">Historique</p>
+          <h2>Chaque battement compte</h2>
+          <p>
+            Jour ou semaine, tes tendances restent lisibles — et exportables.
+            Tes courbes ne sont pas prisonnières d'une app fermée :
+            elles te suivent, où que tu ailles.
+          </p>
+        </div>
+      </div>
+
+      <div class="feature">
+        <div class="phone">
+          <iframe src="mockup/account.html" title="Écran Compte : consentement, export et suppression des données"
+                  loading="lazy" tabindex="-1" scrolling="no"></iframe>
+        </div>
+        <div class="feature-text">
+          <p class="kicker">Compte · RGPD</p>
+          <h2>Tes données t'appartiennent</h2>
+          <p>
+            Consentement révocable en un geste, export JSON/CSV, suppression
+            totale. Privacy by design, pas une case à cocher : c'est
+            l'architecture même de l'app.
+          </p>
+        </div>
+      </div>
+
+      <div class="feature feature--flip">
+        <div class="phone">
+          <iframe src="mockup/login.html" title="Écran de connexion de l'app"
+                  loading="lazy" tabindex="-1" scrolling="no"></iframe>
+        </div>
+        <div class="feature-text">
+          <p class="kicker">Open source</p>
+          <h2>Ouvert, de bout en bout</h2>
+          <p>
+            Pas de compte-prison, pas d'API fermée : du firmware à l'app,
+            le code est ouvert et les formats sont documentés. Tu peux tout
+            lire, tout vérifier, tout reconstruire.
+          </p>
+        </div>
+      </div>
+
+      <a class="cta" href="commander.html">Commander <span class="arrow" aria-hidden="true">→</span></a>
+    </section>
+
+    <footer class="footer">
+      <span class="team">Ryad Bouzourène · Louis Haye · Dorian Kury · Thomas Nguyen</span>
+    </footer>
+  </main>
+</body>
+</html>

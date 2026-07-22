@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Historique — [Nom du projet]</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <main class="app app--dark">
+    <div class="screen">
+
+      <header class="appbar">
+        <div>
+          <h1>Historique</h1>
+          <p class="sub">Mardi 15 juillet</p>
+        </div>
+      </header>
+
+      <nav class="segmented" aria-label="Période">
+        <a href="#" class="on" aria-current="true">Jour</a>
+        <a href="#">Semaine</a>
+      </nav>
+
+      <section class="card bars">
+        <p class="card-title micro">Pouls moyen par heure · bpm</p>
+        <svg viewBox="0 0 360 170" role="img" aria-label="Pouls moyen par heure, de minuit à 14 heures">
+          <!-- grille -->
+          <line class="grid" x1="6" y1="126.7" x2="330" y2="126.7"/>
+          <line class="grid" x1="6" y1="80"    x2="330" y2="80"/>
+          <line class="grid" x1="6" y1="33.3"  x2="330" y2="33.3"/>
+          <text class="axis" x="336" y="129.7">60</text>
+          <text class="axis" x="336" y="83">100</text>
+          <text class="axis" x="336" y="36.3">140</text>
+
+          <!-- barres 00h → 14h -->
+          <rect class="bar" x="6"   y="131.3" width="15" height="18.7" rx="3"/>
+          <rect class="bar" x="28"  y="133.7" width="15" height="16.3" rx="3"/>
+          <rect class="bar" x="50"  y="134.8" width="15" height="15.2" rx="3"/>
+          <rect class="bar" x="72"  y="136"   width="15" height="14"   rx="3"/>
+          <rect class="bar" x="94"  y="134.8" width="15" height="15.2" rx="3"/>
+          <rect class="bar" x="116" y="132.5" width="15" height="17.5" rx="3"/>
+          <rect class="bar" x="138" y="125.5" width="15" height="24.5" rx="3"/>
+          <rect class="bar peak" x="160" y="59" width="15" height="91" rx="3"/>
+          <rect class="bar" x="182" y="98.7"  width="15" height="51.3" rx="3"/>
+          <rect class="bar" x="204" y="115"   width="15" height="35"   rx="3"/>
+          <rect class="bar" x="226" y="119.7" width="15" height="30.3" rx="3"/>
+          <rect class="bar" x="248" y="116.2" width="15" height="33.8" rx="3"/>
+          <rect class="bar" x="270" y="110.3" width="15" height="39.7" rx="3"/>
+          <rect class="bar" x="292" y="113.8" width="15" height="36.2" rx="3"/>
+          <rect class="bar" x="314" y="118.5" width="15" height="31.5" rx="3"/>
+
+          <!-- pic (course du matin) -->
+          <text class="lbl-peak" x="167.5" y="52" text-anchor="middle">118</text>
+
+          <!-- axe horaire -->
+          <text class="axis" x="6" y="164">00h</text>
+          <text class="axis" x="138" y="164">06h</text>
+          <text class="axis" x="270" y="164">12h</text>
+        </svg>
+        <div class="stat-row num">
+          <div class="stat"><div class="v">52</div><div class="k micro">Min</div></div>
+          <div class="stat"><div class="v">64</div><div class="k micro">Moy</div></div>
+          <div class="stat"><div class="v">141</div><div class="k micro">Max</div></div>
+        </div>
+      </section>
+
+      <section class="card">
+        <p class="card-title micro" style="margin-bottom: 0.4rem;">Mesures récentes</p>
+        <div class="rows num">
+          <div class="row"><span class="t">14:30</span><span class="v">62 <small>bpm</small></span><span class="ctx">Repos</span></div>
+          <div class="row"><span class="t">13:45</span><span class="v">71 <small>bpm</small></span><span class="ctx">Marche</span></div>
+          <div class="row"><span class="t">12:10</span><span class="v">78 <small>bpm</small></span><span class="ctx">Repas</span></div>
+          <div class="row"><span class="t">07:24</span><span class="v">141 <small>bpm</small></span><span class="ctx">Sport</span></div>
+          <div class="row"><span class="t">03:12</span><span class="v">52 <small>bpm</small></span><span class="ctx">Sommeil</span></div>
+        </div>
+      </section>
+
+      <nav class="tabbar" aria-label="Navigation principale">
+        <a href="dashboard.html">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 12h4l2-5 4 10 2-5h6"/></svg>
+          Direct
+        </a>
+        <a href="history.html" class="on" aria-current="page">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 20v-7M12 20V6M19 20v-4M3 20h18"/></svg>
+          Historique
+        </a>
+        <a href="account.html">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="3.5"/><path d="M5 20c0-3.9 3.1-6 7-6s7 2.1 7 6"/></svg>
+          Compte
+        </a>
+      </nav>
+
+    </div>
+  </main>
+</body>
+</html>

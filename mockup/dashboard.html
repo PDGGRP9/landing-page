@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Dashboard — [Nom du projet]</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <main class="app app--dark">
+    <div class="screen">
+
+      <header class="appbar">
+        <div>
+          <h1>Salut, Dorian</h1>
+          <p class="sub">Mardi 15 juillet · 14:32</p>
+        </div>
+        <span class="device"><span class="led"></span>Bracelet · 🔋 78%</span>
+      </header>
+
+      <section class="bpm-hero">
+        <span class="micro" style="color: var(--muted);">Fréquence cardiaque</span>
+        <div class="bpm-value">
+          <span class="heart" aria-hidden="true">❤️</span>
+          <span class="n num">62</span>
+          <span class="unit">bpm</span>
+        </div>
+        <p class="state">Au repos · mesuré <b>il y a 3 s</b></p>
+      </section>
+
+      <section class="card">
+        <p class="card-title micro">Signal en direct</p>
+        <div class="live-chart" aria-label="Courbe du pouls en temps réel">
+          <svg viewBox="0 0 800 96" preserveAspectRatio="none" aria-hidden="true">
+            <path d="M0 70
+              l10 0 l7 -46 l8 36 l6 -12 l8 14 l12 6 l49 2
+              l10 0 l7 -46 l8 36 l6 -12 l8 14 l12 6 l49 2
+              l10 0 l7 -46 l8 36 l6 -12 l8 14 l12 6 l49 2
+              l10 0 l7 -46 l8 36 l6 -12 l8 14 l12 6 l49 2
+              l10 0 l7 -46 l8 36 l6 -12 l8 14 l12 6 l49 2
+              l10 0 l7 -46 l8 36 l6 -12 l8 14 l12 6 l49 2
+              l10 0 l7 -46 l8 36 l6 -12 l8 14 l12 6 l49 2
+              l10 0 l7 -46 l8 36 l6 -12 l8 14 l12 6 l49 2" />
+          </svg>
+        </div>
+        <div class="stat-row num">
+          <div class="stat"><div class="v">54</div><div class="k micro">Min</div></div>
+          <div class="stat"><div class="v">63</div><div class="k micro">Moy</div></div>
+          <div class="stat"><div class="v">132</div><div class="k micro">Max</div></div>
+        </div>
+      </section>
+
+      <section>
+        <p class="micro" style="color: var(--muted); margin: 0 0 0.6rem 0.2rem;">Prochaines métriques</p>
+        <div class="metrics">
+          <div class="metric">
+            <span class="ico" aria-hidden="true">🧘</span>
+            <span class="soon">Bientôt</span>
+            <span class="name">Variabilité (HRV)</span>
+          </div>
+          <div class="metric">
+            <span class="ico" aria-hidden="true">🩸</span>
+            <span class="soon">Bientôt</span>
+            <span class="name">SpO2</span>
+          </div>
+          <div class="metric">
+            <span class="ico" aria-hidden="true">👣</span>
+            <span class="soon">Bientôt</span>
+            <span class="name">Pas</span>
+          </div>
+          <div class="metric">
+            <span class="ico" aria-hidden="true">😴</span>
+            <span class="soon">Bientôt</span>
+            <span class="name">Récupération</span>
+          </div>
+        </div>
+      </section>
+
+      <nav class="tabbar" aria-label="Navigation principale">
+        <a href="dashboard.html" class="on" aria-current="page">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 12h4l2-5 4 10 2-5h6"/></svg>
+          Direct
+        </a>
+        <a href="history.html">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 20v-7M12 20V6M19 20v-4M3 20h18"/></svg>
+          Historique
+        </a>
+        <a href="account.html">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="3.5"/><path d="M5 20c0-3.9 3.1-6 7-6s7 2.1 7 6"/></svg>
+          Compte
+        </a>
+      </nav>
+
+    </div>
+  </main>
+</body>
+</html>

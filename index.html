@@ -1,0 +1,285 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Montre connectée — Suivi santé au quotidien</title>
+  <style>
+    :root {
+      --bg: #EBFD73;               /* aligné sur le fond de mockup3.jpg */
+      --ink: #141a05;
+      --ink-soft: #3a4416;
+    }
+
+    * { box-sizing: border-box; }
+
+    /* La page est dimensionnée pour tenir en un écran : aucune barre de scroll
+       n'apparaît. Pas d'overflow:hidden pour autant — si des métriques de police
+       différentes débordent de quelques pixels, mieux vaut scroller que perdre
+       le pied de page en silence. */
+    html, body {
+      height: auto;
+      margin: 0;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--ink);
+      font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .page {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      padding: clamp(1rem, 3.5vh, 2.5rem) clamp(1.5rem, 6vw, 5rem);
+    }
+
+    /* En-tête léger */
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      font-size: clamp(0.72rem, 1.6vw, 0.85rem);
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: var(--ink-soft);
+    }
+
+    .topbar .tag {
+      border: 1.5px solid var(--ink);
+      border-radius: 999px;
+      padding: 0.3em 0.9em;
+    }
+
+    /* Hero central : l'espace entre les blocs est confié à des marges
+       flexibles (margin-top: auto sur les sections), pas à des gaps fixes —
+       la respiration s'adapte à la hauteur d'écran au lieu d'être figée. */
+    .hero {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+    }
+
+    .hero h1 {
+      margin: 0;
+      font-size: clamp(2.4rem, 8.5vw, 5.2rem);
+      line-height: 1.02;
+      letter-spacing: -0.02em;
+      font-weight: 800;
+    }
+
+    .tagline {
+      margin: clamp(0.7rem, 2vh, 1.3rem) 0 0;
+      font-size: clamp(0.95rem, 2.6vw, 1.35rem);
+      font-weight: 700;
+      letter-spacing: 0.01em;
+    }
+    .tagline .dot { color: var(--ink-soft); font-weight: 400; margin: 0 0.15em; }
+
+    /* Ligne ECG animée — seul mouvement de la page, et il est thématique. */
+    .pulse {
+      width: min(560px, 80vw);
+      height: clamp(34px, 6vh, 56px);
+      margin-top: clamp(1rem, 3vh, 2rem);
+      overflow: hidden;
+      -webkit-mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent);
+              mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent);
+    }
+    .pulse svg {
+      display: block;
+      height: 100%;
+      width: 200%;
+      animation: ecg-scroll 2.6s linear infinite;
+    }
+    .pulse path {
+      fill: none;
+      stroke: var(--ink);
+      stroke-width: 2.4;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+    @keyframes ecg-scroll {
+      from { transform: translateX(0); }
+      to   { transform: translateX(-50%); }
+    }
+
+    /* Produit */
+    .showcase {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-top: clamp(1.2rem, 4vh, 2.6rem);
+    }
+
+    /* Le fond du JPEG est exactement --bg : aucune ombre ni cadre, il flotte.
+       (Une ombre est impossible ici : le JPEG est opaque, donc drop-shadow
+       dessinerait son rectangle et non la silhouette du produit.) */
+    .showcase img {
+      width: auto;
+      height: auto;
+      max-width: min(360px, 66vw);
+      max-height: 28vh;
+      object-fit: contain;
+      display: block;
+    }
+
+    /* Mention discrète : présente pour l'honnêteté, pas pour attirer l'œil. */
+    .disclaimer {
+      margin: 0.6rem 0 0;
+      font-size: clamp(0.58rem, 1.2vw, 0.68rem);
+      font-weight: 400;
+      letter-spacing: 0.02em;
+      line-height: 1.4;
+      color: rgba(20, 26, 5, 0.45);
+    }
+
+    .cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6em;
+      margin-top: clamp(1rem, 2.6vh, 1.8rem);
+      background: var(--ink);
+      color: var(--bg);
+      border: 1.5px solid var(--ink);
+      border-radius: 999px;
+      padding: 0.7em 1.7em;
+      font-size: clamp(0.88rem, 2vw, 1.02rem);
+      font-weight: 700;
+      letter-spacing: 0.02em;
+      text-decoration: none;
+    }
+    .cta .arrow { transition: transform 0.18s ease; }
+    .cta:hover .arrow { transform: translateX(3px); }
+
+
+    /* Bloc manifeste */
+    .manifesto {
+      max-width: 62ch;
+      display: flex;
+      flex-direction: column;
+      gap: clamp(0.5rem, 1.6vh, 1rem);
+      margin-top: clamp(1.6rem, 5vh, 3.2rem);
+    }
+    .manifesto .lead {
+      margin: 0;
+      font-size: clamp(1.1rem, 3vw, 1.7rem);
+      font-weight: 800;
+      letter-spacing: -0.01em;
+      line-height: 1.15;
+    }
+    .manifesto p {
+      margin: 0;
+      font-size: clamp(0.82rem, 1.9vw, 1rem);
+      line-height: 1.5;
+      color: var(--ink-soft);
+    }
+
+    /* Pied de page */
+    .footer {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 0.4rem 1rem;
+      margin-top: clamp(1.2rem, 3.5vh, 2.4rem);
+      font-size: clamp(0.7rem, 1.7vw, 0.88rem);
+      color: var(--ink-soft);
+      border-top: 1.5px solid rgba(20, 26, 5, 0.25);
+      padding-top: clamp(0.6rem, 1.6vh, 1rem);
+    }
+    .footer .team { font-weight: 600; }
+
+    /* Palier compact : sur un laptop (~810px de viewport utile) tout doit
+       tenir sans scroll. On resserre le titre et les interlignes. */
+    @media (max-height: 1100px) {
+      .hero h1 { font-size: clamp(2.1rem, 6vw, 3.6rem); }
+      .tagline { margin-top: 0.6rem; }
+      .pulse { margin-top: 0.9rem; }
+      .showcase { margin-top: 1rem; }
+      .showcase img { max-height: 26vh; }
+      .cta { margin-top: 0.9rem; padding: 0.6em 1.5em; }
+      .manifesto { margin-top: 1.3rem; gap: 0.45rem; }
+      .manifesto .lead { font-size: clamp(1rem, 2.4vw, 1.35rem); }
+      .manifesto p { font-size: clamp(0.78rem, 1.6vw, 0.9rem); line-height: 1.45; }
+      .footer { margin-top: 1rem; }
+    }
+
+    /* En dessous, plus rien ne peut tenir en un écran : on laisse la page
+       scroller et on rend au produit une taille décente. */
+    @media (max-height: 780px) {
+      .page { min-height: auto; }
+      .showcase img { max-height: 30vh; }
+    }
+
+    @media (max-width: 700px) {
+      .page { min-height: auto; }
+      .showcase img { max-width: 78vw; max-height: 34vh; }
+      .manifesto { max-width: 100%; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .pulse svg { animation: none; }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <header class="topbar">
+      <span class="tag">Projet PDG · GRP9</span>
+    </header>
+
+    <section class="hero">
+      <h1>[Nom du projet]</h1>
+      <p class="tagline">
+        Open source. Sans abonnement. Sans espion.
+      </p>
+
+      <div class="pulse" aria-hidden="true">
+        <svg viewBox="0 0 400 40" preserveAspectRatio="none">
+          <path d="M0 20 H72 l6 0 l6 -14 l7 28 l7 -22 l6 8 H200 H272 l6 0 l6 -14 l7 28 l7 -22 l6 8 H400" />
+        </svg>
+      </div>
+
+      <div class="showcase">
+        <img src="../assets/img/mockup3.jpg"
+             alt="Le bracelet connecté : boîtier transparent laissant voir la carte ESP32-S3 et sa batterie, bracelet noir, capteur optique rouge déporté."
+             width="1024" height="1024">
+
+        <p class="disclaimer">
+          Visuel généré par IA · projection du produit final
+        </p>
+
+        <a class="cta" href="commander.html">Commander <span class="arrow" aria-hidden="true">→</span></a>
+      </div>
+
+      <div class="manifesto">
+        <p class="lead">Ta santé ne devrait pas être un abonnement.</p>
+        <p>
+          WHOOP, Google Fitbit, Apple Watch et les autres géants du secteur sont des
+          systèmes propriétaires qui décident pour toi ce que tu as le droit de voir,
+          de garder, et de faire avec les données de ton propre corps.
+        </p>
+        <p>
+          Le bien-être ne doit pas se construire derrière des API fermées et des
+          abonnements. Nous nous battons pour un monde plus ouvert, avec des standards
+          partagés et des données qui appartiennent à celles et ceux qui les génèrent.
+        </p>
+      </div>
+
+      <a class="cta" href="app.html">Découvrir l'app <span class="arrow" aria-hidden="true">→</span></a>
+    </section>
+
+    <footer class="footer">
+      <span class="team">Ryad Bouzourène · Louis Haye · Dorian Kury · Thomas Nguyen</span>
+    </footer>
+  </main>
+</body>
+</html>

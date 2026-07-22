@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Compte — [Nom du projet]</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <main class="app app--dark">
+    <div class="screen">
+
+      <header class="appbar">
+        <div>
+          <h1>Compte</h1>
+        </div>
+      </header>
+
+      <section class="card profile">
+        <div class="avatar" aria-hidden="true">DK</div>
+        <div class="who">
+          <p class="name">Dorian K.</p>
+          <p class="mail">dorian@exemple.ch</p>
+        </div>
+      </section>
+
+      <section class="card">
+        <p class="card-title micro" style="margin-bottom: 0.4rem;">Bracelet</p>
+        <div class="setting">
+          <div>
+            <div class="label">Bracelet GRP9 #001</div>
+            <p class="hint">Connecté · Batterie 78% · Firmware v0.1</p>
+          </div>
+          <span class="device"><span class="led"></span>Appairé</span>
+        </div>
+      </section>
+
+      <section class="card">
+        <p class="card-title micro" style="margin-bottom: 0.4rem;">Mes données · RGPD</p>
+
+        <div class="setting">
+          <div>
+            <div class="label">Consentement à la collecte</div>
+            <p class="hint">Mesure du signal PPG et calcul du pouls. Révocable à tout moment.</p>
+          </div>
+          <label class="switch">
+            <input type="checkbox" checked aria-label="Consentement à la collecte">
+            <span class="track"></span>
+          </label>
+        </div>
+
+        <div class="setting">
+          <div>
+            <div class="label">Traitement local privilégié</div>
+            <p class="hint">Minimisation : seules les données nécessaires quittent l'appareil.</p>
+          </div>
+          <label class="switch">
+            <input type="checkbox" checked aria-label="Traitement local privilégié">
+            <span class="track"></span>
+          </label>
+        </div>
+
+        <div style="margin-top: 0.9rem;">
+          <a class="btn btn-ghost" href="#">Exporter mes données (JSON / CSV)</a>
+          <a class="btn btn-danger" href="#">Supprimer toutes mes données</a>
+        </div>
+
+        <p class="note" style="margin-top: 0.9rem;">
+          <b>Privacy by design</b> — données chiffrées au repos et en transit,
+          pseudonymisation (séparation données brutes / identité), formats ouverts
+          et documentés. Tes données t'appartiennent.
+        </p>
+      </section>
+
+      <a class="btn btn-ghost" href="login.html">Se déconnecter</a>
+
+      <nav class="tabbar" aria-label="Navigation principale">
+        <a href="dashboard.html">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 12h4l2-5 4 10 2-5h6"/></svg>
+          Direct
+        </a>
+        <a href="history.html">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 20v-7M12 20V6M19 20v-4M3 20h18"/></svg>
+          Historique
+        </a>
+        <a href="account.html" class="on" aria-current="page">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="3.5"/><path d="M5 20c0-3.9 3.1-6 7-6s7 2.1 7 6"/></svg>
+          Compte
+        </a>
+      </nav>
+
+    </div>
+  </main>
+</body>
+</html>

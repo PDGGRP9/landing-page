@@ -1,0 +1,190 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Commander — bientôt disponible</title>
+  <style>
+    :root {
+      --bg: #EBFD73;               /* même fond que la page principale */
+      --ink: #141a05;
+      --ink-soft: #3a4416;
+      --ink-faint: rgba(20, 26, 5, 0.35);
+    }
+
+    * { box-sizing: border-box; }
+
+    html, body {
+      height: 100%;
+      margin: 0;
+      overflow: hidden;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--ink);
+      font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .page {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      padding: clamp(1rem, 3vh, 2rem) clamp(1.25rem, 5vw, 4rem);
+      gap: clamp(0.8rem, 2.5vh, 1.6rem);
+    }
+
+    /* Titre : COMING remplit toute la largeur (textLength + lengthAdjust,
+       stable quelle que soit la fonte). SOON, plus petit, reste calé à
+       gauche — l'asymétrie fait respirer la page. */
+    .soon {
+      flex: 1;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 0;
+    }
+    .soon svg {
+      display: block;
+      width: 100%;
+      overflow: visible;
+    }
+    .soon svg.l2 { width: 52%; }
+    .soon text {
+      font-family: inherit;
+      font-weight: 900;
+      letter-spacing: -0.03em;
+    }
+    .soon .l1 text { fill: var(--ink); }
+    .soon .l2 text { fill: var(--ink-soft); }
+
+    .soon .l1 { opacity: 0; animation: rise 0.7s ease 0.1s forwards; }
+    .soon .l2 { opacity: 0; animation: rise 0.7s ease 0.25s forwards; }
+
+    @keyframes rise {
+      from { opacity: 0; transform: translateY(14px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Ligne email : la seule tache sombre de la page, impossible à rater. */
+    .signup {
+      opacity: 0;
+      animation: rise 0.6s ease 0.5s forwards;
+      max-width: 30rem;
+    }
+
+    .field {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      background: var(--ink);
+      border-radius: 999px;
+      padding: 0.85em 0.6em 0.85em 1.5em;
+    }
+
+    .field input {
+      flex: 1;
+      min-width: 0;
+      background: none;
+      border: 0;
+      padding: 0;
+      color: var(--bg);
+      font: inherit;
+      font-size: clamp(0.9rem, 2vw, 1.05rem);
+      font-weight: 600;
+      cursor: pointer;
+    }
+    .field input::placeholder { color: rgba(235, 253, 115, 0.8); }
+    .field input:focus { outline: none; }
+
+    .field button {
+      background: var(--bg);
+      border: 0;
+      border-radius: 999px;
+      width: 2.2em;
+      height: 2.2em;
+      flex-shrink: 0;
+      display: grid;
+      place-items: center;
+      color: var(--ink);
+      font: inherit;
+      font-size: 1.1rem;
+      cursor: pointer;
+      transition: transform 0.18s ease;
+    }
+    .field button:hover { transform: translateX(3px); }
+
+    .joke {
+      margin: 0.7rem 0 0 1.5em;
+      color: var(--ink);
+      font-size: clamp(0.85rem, 1.9vw, 0.95rem);
+      font-weight: 700;
+      opacity: 0;
+      transform: translateY(-4px);
+      transition: opacity 0.3s ease, transform 0.3s ease;
+    }
+    .joke.show { opacity: 1; transform: translateY(0); }
+
+    .back {
+      align-self: flex-start;
+      color: var(--ink-soft);
+      font-size: clamp(0.72rem, 1.6vw, 0.85rem);
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      text-decoration: none;
+      transition: color 0.18s ease;
+    }
+    .back:hover { color: var(--ink); }
+
+    @media (max-height: 560px) {
+      html, body { overflow: auto; height: auto; }
+      .page { min-height: auto; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .soon .l1, .soon .l2, .signup { animation: none; opacity: 1; }
+      .joke { transition: none; }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <h1 class="soon">
+      <svg class="l1" viewBox="0 0 100 22" role="img" aria-label="Coming soon">
+        <text x="0" y="18" textLength="100" lengthAdjust="spacingAndGlyphs" font-size="22">COMING</text>
+      </svg>
+      <svg class="l2" viewBox="0 0 52 22" aria-hidden="true">
+        <text x="0" y="18" textLength="52" lengthAdjust="spacingAndGlyphs" font-size="22">SOON</text>
+      </svg>
+    </h1>
+
+    <div class="signup">
+      <div class="field">
+        <input id="mail" type="email" placeholder="ton@email.com" readonly autocomplete="off"
+               aria-label="Ton adresse email pour être averti au lancement">
+        <button id="go" type="button" aria-label="M'avertir au lancement">→</button>
+      </div>
+      <p id="joke" class="joke" role="status" hidden>C'est juste un mockup ;)</p>
+    </div>
+
+    <a class="back" href="index.html">← Retour</a>
+  </main>
+
+  <script>
+    const joke = document.getElementById('joke');
+    const mail = document.getElementById('mail');
+
+    function reveal() {
+      joke.hidden = false;
+      requestAnimationFrame(() => joke.classList.add('show'));
+    }
+
+    mail.addEventListener('focus', reveal);
+    mail.addEventListener('click', reveal);
+    document.getElementById('go').addEventListener('click', reveal);
+  </script>
+</body>
+</html>

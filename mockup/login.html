@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Connexion — [Nom du projet]</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <main class="app">
+    <div class="login">
+      <header class="topbar">
+        <span class="tag">Projet PDG · GRP9</span>
+        <span>Open source</span>
+      </header>
+
+      <section class="login-hero">
+        <h1>[Nom du projet]</h1>
+        <p class="tagline">Open source. Sans abonnement. Sans espion.</p>
+        <div class="pulse" aria-hidden="true">
+          <svg viewBox="0 0 400 40" preserveAspectRatio="none">
+            <path d="M0 20 H72 l6 0 l6 -14 l7 28 l7 -22 l6 8 H200 H272 l6 0 l6 -14 l7 28 l7 -22 l6 8 H400" />
+          </svg>
+        </div>
+      </section>
+
+      <form class="login-form" action="dashboard.html" method="get">
+        <div class="field">
+          <label for="email">Email</label>
+          <input id="email" type="email" placeholder="prenom.nom@exemple.ch" autocomplete="email">
+        </div>
+        <div class="field">
+          <label for="password">Mot de passe</label>
+          <input id="password" type="password" placeholder="••••••••••" autocomplete="current-password">
+        </div>
+        <button class="btn btn-ink" type="submit">Se connecter</button>
+        <div class="login-links">
+          <a href="#">Mot de passe oublié ?</a>
+          <a href="#">Créer un compte</a>
+        </div>
+      </form>
+
+      <footer class="footer">
+        Tes données t'appartiennent
+      </footer>
+    </div>
+  </main>
+</body>
+</html>
